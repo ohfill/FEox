@@ -6,6 +6,9 @@ var two = ['mario', 'drmario', 'yoshi', 'ganon', 'link', 'ylink'];
 var one = ['dk', 'ness', 'gnw', 'pichu', 'kirby'];
 var zero = ['zelda', 'bowser', 'roy', 'mewtwo'];
 
+var activeTeam;
+var teams = [];
+
 function init() {
     var table = document.getElementById('castSelect');
     createRow(table, five, 5, addToTeam);
@@ -17,7 +20,14 @@ function init() {
 }
 
 function addToTeam() {
-    alert('you clicked '+this.className);
+    if(activeTeam == undefined) {
+        return;
+    }
+    var curTeam = document.getElementById(activeTeam);
+    var text = document.createTextNode(this.className);
+    var cell = document.createElement('td');
+    cell.appendChild(text);
+    curTeam.appendChild(cell);
 }
 
 function createRow(table, cast, cost, func) {
@@ -41,4 +51,38 @@ function createRow(table, cast, cost, func) {
         row.appendChild(cell);
     }
     table.appendChild(row);
+}
+
+// called when the submit button is pressed
+function createTeam(item) {
+    var name = item.children[0];
+    if(name.value === '') {
+        return false;
+    }
+    if(teams.indexOf(name.value) > -1) {
+        console.log('duplicate team name', name.value);
+        name.value = '';
+        return false;
+    }
+
+    teams.push(name.value);
+    activeTeam = name.value;
+    var table = document.createElement('table');
+    var row = document.createElement('tr');
+    var header = document.createElement('th');
+    var text = document.createTextNode(name.value);
+    header.appendChild(text);
+    row.appendChild(header);
+    table.appendChild(row);
+    row = document.createElement('tr');
+    row.id = name.value;
+    table.appendChild(row);
+    document.getElementById('theTeams').appendChild(table);
+
+    name.value = '';
+    return false;
+}
+
+function makeActive(name) {
+    activeTeam = name;
 }

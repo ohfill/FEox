@@ -2,12 +2,31 @@
 <html>
 <head>
 	<title>FEox App</title>
+    <style>
+        div {
+            display: inline-block;
+            width: 48%;
+            vertical-align: top;
+        }
+    </style>
 </head>
 <body onload="init()">
 	<h1>The Melee Iron Man Companion App</h1>
+    <div id="selection">
+    <h2>The Cast</h2>
 	<table id="castSelect">
         <!-- javascript dynamically builds this-->
 	</table>
+
+    <form id="createPlayer" onsubmit="return createTeam(this)">
+        <input type="text" placeholder="your name">
+        <input type="submit">
+    </form>
+    </div>
+    <div id="theTeams">
+        <h2>The Teams</h2>
+        <!-- created by javascript -->
+    </div>
 	<script src="main.js"></script>
 </body>
 </html>
