@@ -23,10 +23,26 @@ function addToTeam() {
     if(activeTeam == undefined) {
         return;
     }
+    var name = this.classList[0];
+    var cost = this.classList[1];
     var curTeam = document.getElementById(activeTeam);
-    var text = document.createTextNode(this.className);
+    var curPoints = curTeam.children[0];
+    if(curPoints.textContent - cost < 0) {
+        console.log("can't exceed point total");
+        return;
+    } else if(curTeam.children.length > 5) {
+        console.log("can't have over 5 characters");
+        return;
+    } else if(curTeam.getElementsByClassName(name).length > 0) {
+        console.log("can't have same member more than once");
+        return;
+    }
     var cell = document.createElement('td');
-    cell.appendChild(text);
+    cell.className = name;
+    var pic = new Image();
+    curPoints.textContent = curPoints.textContent - cost;
+    pic.src = "cast/"+name+".png";
+    cell.appendChild(pic);
     curTeam.appendChild(cell);
 }
 
@@ -46,6 +62,7 @@ function createRow(table, cast, cost, func) {
         cell.className = cast[i];
         var pic = new Image();
         pic.src = "cast/"+cast[i]+".png";
+        cell.classList += " "+cost;
         cell.onclick = func;
         cell.appendChild(pic);
         row.appendChild(cell);
@@ -76,6 +93,10 @@ function createTeam(item) {
     table.appendChild(row);
     row = document.createElement('tr');
     row.id = name.value;
+    var cell = document.createElement('td');
+    text = document.createTextNode(15);
+    cell.appendChild(text);
+    row.appendChild(cell);
     table.appendChild(row);
     document.getElementById('theTeams').appendChild(table);
 
