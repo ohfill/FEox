@@ -103,6 +103,8 @@ function createTeam(item) {
     table.appendChild(row);
     document.getElementById('theTeams').appendChild(table);
 
+	// check if team is set
+
     name.value = '';
     return false;
 }
@@ -110,3 +112,9 @@ function createTeam(item) {
 function makeActive(name) {
     activeTeam = name;
 }
+
+function onUnload() {
+	// save teams
+}
+
+window.onunload = onUnload;
