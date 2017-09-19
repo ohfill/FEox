@@ -104,6 +104,17 @@ function createTeam(item) {
     document.getElementById('theTeams').appendChild(table);
 
 	// check if team is set
+	/*var txtFile = "teams.txt";
+	var file = new File(txtFile);
+	file.open("r");
+	while (!file.eof) {
+		// read each line of text
+		line = file.readln();
+		if(line.startsWith(name.value)) {
+			// pull team
+		}
+	}
+	file.close();*/
 
     name.value = '';
     return false;
@@ -114,7 +125,17 @@ function makeActive(name) {
 }
 
 function onUnload() {
-	// save teams
+	// save active team
+	var txtFile = "./teams.txt";
+	var file = new File(txtFile);
+	file.open("w");
+	file.write(activeTeam + ": ");
+	// save the team (probably by character ID)
+	var curTeam = document.getElementById(activeTeam);
+	for (i = 1; i < curTeam.children.length; i++) {
+		file.write(curTeam.children[i] + " ");
+	}
+	file.close();
 }
 
 window.onunload = onUnload;
