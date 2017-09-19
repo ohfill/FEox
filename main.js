@@ -37,13 +37,12 @@ function addToTeam() {
         console.log("can't have same member more than once");
         return;
     }
-    var cell = document.createElement('td');
-    cell.className = name;
-    var pic = new Image();
-    curPoints.textContent = curPoints.textContent - cost;
-    pic.src = "cast/"+name+".png";
-    cell.appendChild(pic);
-    curTeam.appendChild(cell);
+    // function is removeFromTeam()
+    createCell(curTeam, name, cost, function(){
+        curPoints.textContent = parseInt(curPoints.textContent) + parseInt(cost);
+        this.remove();
+    });
+   curPoints.textContent = curPoints.textContent - cost;
 }
 
 function createRow(table, cast, cost, func) {
@@ -58,16 +57,20 @@ function createRow(table, cast, cost, func) {
     // add all the characters in this tier
     row = document.createElement('tr');
     for(var i=0; i<cast.length;i++) {
-        var cell = document.createElement('td');
-        cell.className = cast[i];
-        var pic = new Image();
-        pic.src = "cast/"+cast[i]+".png";
-        cell.classList += " "+cost;
-        cell.onclick = func;
-        cell.appendChild(pic);
-        row.appendChild(cell);
+        createCell(row, cast[i], cost, func);
     }
     table.appendChild(row);
+}
+
+function createCell(row, name, cost, func) {
+    var cell = document.createElement('td');
+    cell.className = name
+    var pic = new Image();
+    pic.src = "cast/"+name+".png";
+    cell.classList += " "+cost;
+    cell.onclick = func;
+    cell.appendChild(pic);
+    row.appendChild(cell);
 }
 
 // called when the submit button is pressed
